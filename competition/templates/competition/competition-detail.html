@@ -1,0 +1,60 @@
+{% extends 'competition/base.html' %}
+
+{% block nav_links %}
+    <a href="{% url 'index' %}">Home</a>
+{% endblock nav_links %}
+
+{% block content %}
+<form action="{% url 'post_form' competition_selection.id %}" method="post">
+    {% csrf_token %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for competition in competition_list %}
+        <input type="text" name="competition_{{ forloop.counter }}" id="competition{{ forloop.counter }}" value="{{competition.name}} "><br>
+    {% endfor %}
+    <input type="submit" value="Submit changes">
+</form>
+
+<section>
+    {% if competition_selection %}
+    <h1>Competition:{{competition_selection.name}}</h1>
+    <p>Organiser:   {{competition_selection.organiser.name}}</p>
+    <p>User:        {{competition_selection.organiser.user}}</p>
+    <p>Status:      {{competition_selection.status}}</p>
+    <p>Date:        {{competition_selection.date}}</p>
+    <br>
+        {% if competition_selection.satay_set.all %}
+            {% for satay in competition_selection.satay_set.all %}
+            <p>Satay: {{satay.cook }}</p>
+                {% if satay.rating_set.all %}
+                    {% for rating in satay.rating_set.all %}
+                    <p>&nbsp;&nbsp; Rating: {{rating }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>&nbsp;&nbsp; No Ratings found</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No Satay found</p>
+        {% endif %}
+    {% else %}
+    <p>No competitions found</p>
+    {% endif %}
+</section>
+
+<section>
+<h2>All competitions:</h2><br>
+    {% if competition_list %}
+        {% for competition in competition_list %}
+            <h2><a href="/competition/{{ competition.id }}/">{{ competition }}</a></h2>
+            <p>Satays:</p>
+            {% for satay in competition.satay_set.all %}
+                {% comment %} <a href='/'>| {{ satay.cook.name }} </a> {% endcomment %}
+                <p href='/'>| {{ satay.cook.name }} </p>
+            {% endfor %}
+            <br><br><br>
+        {% endfor %}
+    {% else %}
+        <li>No competitions found</li>
+    {% endif %}
+</section>
+{% endblock content %}
