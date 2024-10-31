@@ -3,9 +3,6 @@ WAAROM
     meerdere apps? (url namespace?)
 
 VIEWS
-    make user/player (guest)
-        add User
-        add Player
     change competition (admin)
     delete competition (admin)
     join competition (player)

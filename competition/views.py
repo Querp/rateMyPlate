@@ -69,6 +69,30 @@ def post_form(request, competition_id):
         messages.info(request, f"{changed_names} {naam_or_namen} gewijzigd.")
     return HttpResponseRedirect(reverse("competition", args=(competition_id,)))
 
+def edit_competition(request, competition_id):
+    competition_selection = get_object_or_404(Competition, pk=competition_id)
+    num_changed_attr = 0
+    if request.method == 'POST':
+        if competition_selection.name != request.POST['name']:
+            messages.success(request, f"Naam '{competition_selection.name}' is gewijzigd naar '{request.POST['name']}'.")
+            competition_selection.name = request.POST['name']
+            num_changed_attr += 1
+        if competition_selection.status != request.POST['status']:
+            messages.success(request, f"Status '{competition_selection.status}' is gewijzigd naar '{request.POST['status']}'.")
+            competition_selection.status = request.POST['status']
+            num_changed_attr += 1
+        if competition_selection.date != request.POST['date'].strip():
+            messages.success(request, f"Datum '{competition_selection.date}' is gewijzigd naar '{request.POST['date']}'.")
+            competition_selection.date = request.POST['date'].strip()
+            num_changed_attr += 1
+        competition_selection.save()
+        if num_changed_attr > 0:
+            messages.info(request, f"{num_changed_attr} wijziging(en) gemaakt.'")
+        return redirect('competition', pk=competition_id) 
+    return render(request, "competition/competition_edit.html", {'competition':competition_selection})
+
+
+
 @login_required
 def database(request):
     num_visits = request.session.get('num_visits', 0)
@@ -123,7 +147,6 @@ def new_competition(request):
     return render(request, 'competition/competition_new.html', context)
 
 def register(request):
-    # create_player
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -131,6 +154,7 @@ def register(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1') 
             messages.success(request, f"Gebruiker '{username}', wachtwoord '{password}' is geregistreerd!")
+            # create_player
             add_player(new_user)
             return redirect("../accounts/login/")
         else:
@@ -145,12 +169,8 @@ def add_player(new_user):
 
 
 
-
     
 def edit_player(request):
-    pass
-
-def edit_competition(request):
     pass
 
 def delete_competition(request):

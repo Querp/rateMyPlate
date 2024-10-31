@@ -42,3 +42,46 @@
         }
     }
 }
+
+.competiton-detail,
+.competition-edit {
+    border: 2px solid rgba(255, 255, 255, 0.474);
+    background: rgb(30, 48, 91);
+    h1{
+        display: flex;
+        align-items: center;
+        transition: color 0.2s ease;
+        a{
+           &:hover{
+            background: none;
+            box-shadow: none;
+           } 
+           img{
+                width: 80px;
+                height: 80px;
+                filter: drop-shadow(0 0 1px rgb(0, 0, 0));
+                margin-left: 0.5rem;
+                transition: transform ease 2s;
+                &:hover{
+                    transform: skew(-45deg, 45deg) translate(8px, -8px);
+                    transition: transform ease 0.7s;
+                }
+            }
+        }
+    }
+} 
+
+.competition-edit {
+    form {
+        max-width: 400px;
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+    }
+
+
+    input:disabled {
+        background: rgb(30, 48, 91);
+        border: none;
+    }
+    
+}

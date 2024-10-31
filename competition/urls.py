@@ -9,6 +9,7 @@ urlpatterns = [
     
     path("competition/<int:pk>/", views.competition_detail, name="competition"), 
     path("competition/<int:competition_id>/post", views.post_form, name="post_form"),
+    path("competition/<int:competition_id>/edit_competition/", views.edit_competition, name="edit_competition"),
     path("competition/new_competition/", views.new_competition, name="new_competition"),
     
     path('accounts/', include('django.contrib.auth.urls')),

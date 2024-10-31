@@ -1,0 +1,35 @@
+{% extends 'competition/base.html' %}
+{% load static %}
+
+{% block nav_links_extend %}
+    <a href="{% url 'index' %}">Home</a>
+{% endblock nav_links_extend %}
+
+{% block content %}
+    <section>
+        <h2>Wijzig competitie</h2>
+    </section>
+    
+    <section class="competition-edit">  
+        <h1>{{ competition.name }}</h1>
+        <p>{{ competition.organiser }}</p>
+        <form action="{% url 'edit_competition' competition.id %}" method="post">
+            {% csrf_token %}
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <label for="name">Naam</label>
+                <input type="text" name="name" id="name" value="{{competition.name}}">
+                <label for="organiser">Organisator</label>
+                <input type="text" name="organiser" id="organiser" value="{{competition.organiser}}" disabled>
+                <label for="status">Status</label>
+                <input type="text" name="status" id="status" value="{{competition.status}}">
+                <label for="date">datum</label>
+                <input type="datetime-local" name="date" id="date" value="{{ competition.date|date:"Y-m-d\\TH:i" }}">
+            <input type="submit" value="Sla wijzigingen op">
+        </form>
+    </section>
+{% endblock content %}
+
+
+
+
+
