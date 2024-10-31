@@ -1,0 +1,12 @@
+{% extends 'registration/base.html' %}
+
+
+{% block registration_content %}
+{% comment %} <p>Logged out!</p> {% endcomment %}
+{% if messages %}
+      {% for message in messages %}
+          <p>{{ message }}</p>
+      {% endfor %}
+{% endif %}
+<a href="{% url 'login'%}">Klik hier om opnieuw in te loggen.</a>
+{% endblock %}

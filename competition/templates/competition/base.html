@@ -1,26 +1,21 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'competition/style.css' %}">
-</head>
-<body>
-    <header>
-        <div class="links">
-            {% block nav_links %}
+{% block head_links %}
+    <link rel="stylesheet" href="{% static 'competition/base.css' %}">
+{% endblock head_links %}
 
-            {% endblock nav_links %}
-        </div>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-      </main>
-</body>
-</html>
+
+{% block nav_links %}
+    {% block nav_links_extend %}
+        {% comment %} <a href="{% url 'database' %}">DB</a> {% endcomment %}
+    {% endblock nav_links_extend %}
+
+    {% comment %} {% if competition_list %}
+        {% for competition in competition_list %}
+            <a href="{% url 'competition' forloop.counter %}">C{{forloop.counter}}: {{competition.name|truncatewords:2}}</a>
+        {% endfor %}
+    {% endif %} {% endcomment %}
+{% endblock nav_links %}
+
+{% block content %}{% endblock content %}

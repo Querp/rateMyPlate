@@ -1,0 +1,12 @@
+{% extends 'registration/base.html' %}
+
+{% block content %}
+<section>
+    <h1>Acount maken</h1>
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button>Registreer</button>
+    </form>
+</section>
+{% endblock content %}

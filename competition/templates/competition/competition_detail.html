@@ -1,26 +1,18 @@
 {% extends 'competition/base.html' %}
 
-{% block nav_links %}
+{% block nav_links_extend %}
     <a href="{% url 'index' %}">Home</a>
-{% endblock nav_links %}
+{% endblock nav_links_extend %}
 
 {% block content %}
-<form action="{% url 'post_form' competition_selection.id %}" method="post">
-    {% csrf_token %}
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    {% for competition in competition_list %}
-        <input type="text" name="competition_{{ forloop.counter }}" id="competition{{ forloop.counter }}" value="{{competition.name}} "><br>
-    {% endfor %}
-    <input type="submit" value="Submit changes">
-</form>
+
 
 <section>
     {% if competition_selection %}
-    <h1>Competition:{{competition_selection.name}}</h1>
-    <p>Organiser:   {{competition_selection.organiser.name}}</p>
-    <p>User:        {{competition_selection.organiser.user}}</p>
-    <p>Status:      {{competition_selection.status}}</p>
-    <p>Date:        {{competition_selection.date}}</p>
+    <h1>{{competition_selection.name}}</h1>
+    <p>Organisator:     {{competition_selection.organiser.name}}</p>
+    <p>Status:          {{competition_selection.status}}</p>
+    <p>Datum:           {{competition_selection.date}}</p>
     <br>
         {% if competition_selection.satay_set.all %}
             {% for satay in competition_selection.satay_set.all %}
@@ -30,23 +22,35 @@
                     <p>&nbsp;&nbsp; Rating: {{rating }}</p>
                     {% endfor %}
                 {% else %}
-                    <p>&nbsp;&nbsp; No Ratings found</p>
+                    <p>&nbsp;&nbsp; Geen ratings gevonden.</p>
                 {% endif %}
             {% endfor %}
         {% else %}
-            <p>No Satay found</p>
+            <p>Geen saté's gevonden.</p>
         {% endif %}
     {% else %}
-    <p>No competitions found</p>
+    <p>Geen competities gevonden.</p>
     {% endif %}
 </section>
-
+<hr>
 <section>
-<h2>All competitions:</h2><br>
+    <h2>Wijzig competitienamen</h2>
+    <form action="{% url 'post_form' competition_selection.id %}" method="post">
+        {% csrf_token %}
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for competition in competition_list %}
+            <input type="text" name="competition_{{ forloop.counter }}" id="competition{{ forloop.counter }}" value="{{competition.name}} "><br>
+        {% endfor %}
+        <input type="submit" value="Sla gewijzigde namen op">
+    </form>
+</section>
+<hr>
+<section>
+<h2>Competities:</h2><br>
     {% if competition_list %}
         {% for competition in competition_list %}
             <h2><a href="/competition/{{ competition.id }}/">{{ competition }}</a></h2>
-            <p>Satays:</p>
+            <p>Saté's:</p>
             {% for satay in competition.satay_set.all %}
                 {% comment %} <a href='/'>| {{ satay.cook.name }} </a> {% endcomment %}
                 <p href='/'>| {{ satay.cook.name }} </p>
@@ -54,7 +58,7 @@
             <br><br><br>
         {% endfor %}
     {% else %}
-        <li>No competitions found</li>
+        <li>Geen competities gevonden.</li>
     {% endif %}
 </section>
 {% endblock content %}

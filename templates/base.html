@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'header.css' %}">
+    {% block head_links %}{% endblock head_links %}
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <p>Rate My Plate</p>
+            <img src="{% static 'competition/logo.svg' %}" alt="">
+        </a>
+        <div class="links">
+            {% block nav_links %}
+            {% endblock nav_links %}
+        </div>
+        <div class="active_user">
+            {% if user.is_superuser %}
+            <a href="admin">Django admin</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <form id="logout-form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link">Logout</button>
+            </form>
+            <p class="username {% if user.is_superuser %}superuser{% endif %}">{{ user.username }}</p>
+            {% else %}
+                <p>Logged out</p>
+                {% comment %} <p><a href="{% url 'login' %}" target="_self">login</a></p> {% endcomment %}
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="messages">
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert {{message.tags}}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+</body>
+</html> 

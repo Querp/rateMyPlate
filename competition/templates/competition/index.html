@@ -1,152 +1,38 @@
 {% extends 'competition/base.html' %}
 
-
-{% block nav_links %}
+{% block nav_links_extend %}
+    <a href="{% url 'database' %}" class='database'>DB</a>
     {% if competition_list %}
         {% for competition in competition_list %}
-            <a href="{% url 'competition' forloop.counter %}">C{{forloop.counter}}: {{competition.name}}</a>
+            <a href="{% url 'competition' competition.id %}">{{competition.name|truncatewords:5}}</a>
         {% endfor %}
-    {% endif %}
-{% endblock nav_links %}
+    {% endif %} 
+{% endblock nav_links_extend %}
 
 {% block content %}
-<section class="log">
-    <h2>Log</h2>
-    <div class="table">
-        <span class="th pk">id</span> 
-        <span class="th">user<span class="fk">(User)</span></span> 
-        <span class="th">model</span> 
-        <span class="th">pk</span> 
-        <span class="th">attribute</span> 
-        <span class="th">action</span> 
-        <span class="th">description</span> 
-        <span>1</span> 
-        <span>Riaatjuh69</span> 
-        <span>Rating</span> 
-        <span>1</span> 
-        <span>None</span> 
-        <span>add row(Henk, Ria Regels, 60, 70)</span> 
-        <span>rated Henk's satay</span> 
-        <span>2</span> 
-        <span>ReallyGoodCookingMan</span> 
-        <span>Rating</span> 
-        <span>2</span> 
-        <span>None</span> 
-        <span>add row(Henk, Ria Regels, 87, 90)</span> 
-        <span>rated Henk's satay</span> 
-</section> 
+    {% comment %} <input type="datetime-local"> {% endcomment %}
+    <section class='new-competition'>
+        <a href="{% url 'new_competition' %}">Voeg competitie toe</a>
+    </section>
 
-</section>
-<section class="user">
-    <h2>User</h2>
-    {% if user_list %}
-        <div class="table">
-            <span class="th pk">id</span> 
-            <span class="th">username</span> 
-            <span class="th">first_name</span> 
-            <span class="th">last_name</span> 
-            <span class="th">email</span> 
-            <span class="th">date_joined</span> 
-            <span class="th">last_login</span> 
-            <span class="th">is_active</span> 
-            <span class="th">is_staff</span> 
-            <span class="th">is_superuser</span> 
-            {% comment %} <span class="th">password</span>  {% endcomment %}
-            {% for user in user_list %}
-                {% comment %} <a href="/user/{{ user.id }}/">{{ user.username }} </a> {% endcomment %}
-                <span>{{ user.id }}</span>    
-                <span>{{ user.username }}</span>    
-                <span>{{ user.first_name }}</span> 
-                <span>{{ user.last_name }}</span> 
-                <span>{{ user.email }}</span> 
-                <span>{{ user.date_joined }}</span> 
-                <span>{{ user.last_login }}</span> 
-                <span>{{ user.is_active }}</span> 
-                <span>{{ user.is_staff }}</span> 
-                <span>{{ user.is_superuser }}</span> 
-                {% comment %} <span>{{ user.password }}</span>  {% endcomment %}
+    <section class="index-competition">
+        {% comment %} {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
             {% endfor %}
-        </div>      
-    {% else %}
-        <p>No users are available.</p>
-    {% endif %}
-</section>
-
-<section class="player">
-    <h2>Player</h2>
-    {% if player_list %}
-        <div class="table">
-            <span class="th pk">user <span class="fk">(User)</span></span> 
-            <span class="th">name</span> 
-        {% for player in player_list %}
-        <span>{{ player.user.username }}</span>
-        <span>{{ player.name }}</span>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>No players are available.</p>
-    {% endif %}
-</section>
-
-<section class="competition">
-    <h2>Competition</h2>
-    {% if competition_list %}
-        <div class="table">
-            <span class="th pk">id</span> 
-            <span class="th">name</span> 
-            <span class="th">organiser<span class="fk">(Player)</span></span> 
-            <span class="th">status</span> 
-            <span class="th">date</span> 
-        {% for competition in competition_list %}
-            <span>{{ competition.id }}</span>
-            <span><a href="/competition/{{ competition.id }}/">{{ competition.name }}</a></span>
-            <span>{{ competition.organiser.name }}</span>
-            <span>{{ competition.status }}</span>
-            <span>{{ competition.date }}</span>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>No competitions are available.</p>
-    {% endif %}
-</section>
-
-<section class="satay">
-    <h2>Satay</h2>
-    {% if satay_list %}
-    <div class="table">
-        <span class="th pk">id</span> 
-        <span class="th">competition<span class="fk">(Competition)</span></span> 
-        <span class="th">cook<span class="fk">(Player)</span></span> 
-        {% for satay in satay_list %}
-            <span>{{ satay.id }}</span>
-            <span>{{ satay.competition.name }}</span>
-            <span>{{ satay.cook.name }}</span>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p>No satays are available.</p>
-    {% endif %}
-</section>
-
-<section class="rating">
-    <h2>Rating</h2>
-    {% if rating_list %}
-    <div class="table">
-        <span class="th pk">id</span> 
-        <span class="th">satay<span class="fk">(Satay)</span></span> 
-        <span class="th">rater<span class="fk">(Player)</span></span> 
-        <span class="th">taste</span> 
-        <span class="th">tenderness</span> 
-        {% for rating in rating_list %}
-            <span>{{rating.id}}</span>
-            <span>{{rating.satay.cook.name}}</span>
-            <span>{{rating.rater.name}}</span>
-            <span>{{rating.taste}}</span>
-            <span>{{rating.tenderness}}</span>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p>No ratings are available.</p>
-    {% endif %}
-</section>
-{% endblock %}
+        {% endif %} {% endcomment %}
+        <h2>Alle Competities</h2>
+        {% if competition_list %}
+            {% for competition in competition_list %}
+                <div class="competition">
+                    <h2><a href="{% url 'competition' competition.id %}">{{ competition.name }}</a></h2>
+                    <div class="{% if request.user == competition.organiser.user %}me{% endif %}"><span class='label'>Organisator: </span>{{ competition.organiser.name }}</div>
+                    <div><span class='label'>Status: </span>{{ competition.status }}</div>
+                    <div><span class='label'>Datum: </span>{{ competition.date }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Geen competities beschikbaar.</p>
+        {% endif %}
+    </section>
+{% endblock content%}

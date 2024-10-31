@@ -1,0 +1,14 @@
+{% extends "competition/base.html" %}
+
+{% block content %}
+    <section>
+        <h1>Nieuwe Competitie</h1>
+        <form action="{% url 'new_competition' %}" method="post">
+            {% csrf_token %}
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {{ form.as_p }} 
+            <input type="submit" value="Opslaan">
+        </form>
+    </section>
+{% endblock content %}
+

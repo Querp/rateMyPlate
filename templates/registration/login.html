@@ -1,0 +1,44 @@
+{% extends 'registration/base.html' %}
+
+
+
+{% block registration_content %}
+  {% comment %} {% if messages %}
+    {% for message in messages %}
+      <div>{{ message }}</div>
+    {% endfor %}
+  {% endif %} {% endcomment %}
+  <div class="errors">
+    {% if form.errors %}
+      <p>Uw gebruikersnaam en wachtwoord komen niet overeen. Probeer het opnieuw.</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>Uw account heeft geen toegang tot deze pagina.</p>
+      {% else %}
+        <p>Log in om deze pagina te kunnen zien.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <a href="{% url 'register' %}">acount maken</a>
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td class='input'>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td class='input'>{{ form.password }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="inloggen">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+
+  <p><a href="{% url 'password_reset' %}">wachtwoord vergeten?</a></p>
+{% endblock registration_content %}
