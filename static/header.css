@@ -1,0 +1,124 @@
+header {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  background: #111;
+  background: hsla(236, 23%, 13%, 1);
+  font-family: oswald;
+
+  .logo {
+    margin-inline: 0.2rem 1.4rem;
+    display: flex;
+    align-items: center;
+    padding: 0.15rem 0.5rem;
+    text-decoration: none;
+
+    p {
+      margin-right: 0.5rem;
+    }
+
+    img {
+      height: 32px;
+      color: red;
+    }
+    &:hover {
+      --hvr-clr: rgba(255, 255, 255, 0.644);
+      color: hsl(0, 0%, 85%);
+      text-shadow: 0 0 2px var(--hvr-clr);
+      img {
+        filter: brightness(0) saturate(100%) invert(92%) sepia(100%)
+          saturate(0%) hue-rotate(115deg) brightness(104%) contrast(105%);
+        filter: drop-shadow(0 0 2px var(--hvr-clr));
+      }
+    }
+  }
+
+  .links {
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    box-shadow: 1px 0 20px 3px rgba(255, 0, 0, 0);
+    position: relative;
+    gap: 0.2rem;
+
+    a {
+      display: block;
+      background: var(--bg-clr);
+      color: var(--link-clr);
+      padding: 0.1rem 0.7rem;
+      border: 2px solid rgb(21, 22, 25);
+      text-decoration: none;
+      position: relative;
+      text-wrap: nowrap;
+
+      &:hover {
+        cursor: pointer;
+        border-color: var(--link-clr);
+        box-shadow: inset 0 0 5px 0px var(--link-clr);
+        z-index: 1;
+      }
+      &:active {
+        text-shadow: none;
+        background: var(--link-clr);
+        box-shadow: 0 0 0 3px var(--link-clr);
+        color: rgb(8, 8, 10);
+        border-radius: 0.04rem;
+      }
+    }
+  }
+  
+  .active_user {
+    /* background: var(--bg-clr); */
+    /* font-size: 0.8rem; */
+    /* background: var(--link-bg-hover); */
+    /* background: var(--bg-clr); */
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-family: oswald;
+    /* padding: 0.4rem 1rem3vw; */
+    /* border: 2px solid rgb(21, 22, 25); */
+    margin-left: auto;
+    padding-right: 0.5rem;
+    a {
+      background: rgb(10, 41, 14);
+      padding: 0.3rem;
+      text-decoration: none;
+      margin-right: 0.5rem;
+      &:hover {
+        background: rgb(15, 69, 22);
+        box-shadow: 0 0 100px 4px rgba(17, 144, 34, 0.3);
+      }
+      &:active{
+        box-shadow: 0 0 100px 4px rgb(17, 144, 34);
+      }
+    }
+    p.username{
+      text-transform: uppercase;
+      
+      &.superuser{
+        color: rgb(143, 255, 143);
+      }
+    }
+    #logout-form {
+      margin-right: 0.35rem;
+
+      button[type="submit"] {
+        background: red;
+        background: var(--bg-clr);
+        color: inherit;
+        font-family: inherit;
+        padding: 0.2rem 0.5rem;
+      }
+    }
+  }
+
+  a.database{
+    color: rgb(179, 84, 50);
+  }
+}

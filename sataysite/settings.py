@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9h$^3pltfk7&9$8mjsf(1lc_(_jnap#$+4!cy#u8k*863e7rvc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['querp.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

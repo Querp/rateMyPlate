@@ -1,0 +1,105 @@
+:root {
+    --txt-main-clr: #ccc;
+    --bg-clr: #0b0c0c;
+    --link-clr: #2c84ff;
+    --link-sec-clr: hsla(215, 100%, 59%, 0.12);
+    --link-bg-hover: #040404;
+    --th-bg-clr: #090a0a;
+    --th-fk: #5aa85a;
+    --th-pk: #b83285;
+    --alert-succes:#28a745;
+    --alert-info:var(--link-clr);
+    --alert-warning:#ffb92c;
+    --alert-error:#ff2c2c;
+}
+
+body {
+    background: var(--bg-clr) ;
+    font-family: 'open sans';
+    color: var(--txt-main-clr);
+}
+
+
+
+
+
+.messages {
+    display: none;
+    position: fixed;
+    z-index: 4;
+    inset: auto 0 0 auto;
+    margin: 0.3rem;
+    .alert {
+        color: #e8e8e8f7;
+
+        &.success{
+            --alert-clr: var(--alert-succes);
+        }
+        &.info{
+            --alert-clr: var(--alert-info);
+        }
+        &.warning{
+            --alert-clr: var(--alert-warning);
+            color: #191919;
+        }
+        &.error{
+            --alert-clr: var(--alert-error);
+        }
+        background: var(--alert-clr);
+        box-shadow: 0 0 5px 1px var(--alert-clr);
+        border: 1px solid rgba(255, 255, 255, 0.298);
+        border-radius: 0.12rem;
+        padding: 1.8rem 5rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
+        transition: transform 1s ease;
+        &:hover {
+            box-shadow: 0 0 5px 3px var(--alert-clr); 
+            
+        }
+        &:active{
+            transform: rotate(180deg);
+            transition: transform 0s;
+        }
+    }
+
+    /* only show container if it has content */
+    &:has(p) { 
+        display: block;
+    }
+}
+
+select, option, input {
+    background: var(--bg-clr);
+    color: var(--txt-main-clr);
+    padding: 0.2rem 0.8rem;
+}
+
+input{
+    &:-webkit-autofill{
+        -webkit-box-shadow: inset 0 0 0 30px var(--bg-clr) !important;
+        -webkit-text-fill-color: var(--txt-main-clr);
+    }
+
+    &[type="submit"]{
+        color: var(--link-clr);
+        border-radius: 0.03rem;
+        border: none;
+        font-size: inherit;
+        background: none;
+
+        &:hover{
+            text-shadow: 0 0 5px #111;
+            background: var(--link-bg-hover);
+            box-shadow: inset 0 0 0 2px  var(--link-clr);
+        }
+        &:active{
+            text-shadow: none;
+            background: var(--link-clr);
+            box-shadow: 0 0 0 3px var(--link-clr);
+            color: rgb(8, 8, 10)
+        }
+    }
+}
+
