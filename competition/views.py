@@ -12,8 +12,8 @@ from .models import Player, Competition, PlayerCompetition, Satay, Rating
 from . import forms
 
 
-def admin(request):
-    return redirect('admin')
+# def admin(request):
+#     return redirect('admin')
 
 @login_required
 def index(request):

@@ -9,24 +9,19 @@
 
 <section>
     {% if competition_selection %}
-    <h1>{{competition_selection.name}}</h1>
+    <h1>
+        {{competition_selection.name}}</h1>
     <p>Organisator:     {{competition_selection.organiser.name}}</p>
     <p>Status:          {{competition_selection.status}}</p>
     <p>Datum:           {{competition_selection.date}}</p>
     <br>
-        {% if competition_selection.satay_set.all %}
-            {% for satay in competition_selection.satay_set.all %}
-            <p>Satay: {{satay.cook }}</p>
-                {% if satay.rating_set.all %}
-                    {% for rating in satay.rating_set.all %}
-                    <p>&nbsp;&nbsp; Rating: {{rating }}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>&nbsp;&nbsp; Geen ratings gevonden.</p>
-                {% endif %}
+        {% if competition_selection.playercompetition_set.all %}
+            {% for playercompetition in competition_selection.playercompetition_set.all %}
+            <p>Speler {{forloop.counter}}: {{playercompetition.player.name }}</p>
+                {% comment %} inverse set, then inverse 1-1 {% endcomment %}
             {% endfor %}
         {% else %}
-            <p>Geen saté's gevonden.</p>
+            <p>Geen spelers gevonden.</p>
         {% endif %}
     {% else %}
     <p>Geen competities gevonden.</p>
